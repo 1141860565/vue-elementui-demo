@@ -201,7 +201,7 @@ export default {
       // this.$http.post('/api/srcsys/querysrcsys',data).then((res)=>{
       // 不带参的请求
       this.tabledivloading = true;
-      this.$http.get("/api/srccolumn/querysrccolumn?pageNum=" + this.currentPage).then(res => {
+      this.$http.get(process.env.API_HOST + "/srccolumn/querysrccolumn?pageNum=" + this.currentPage).then(res => {
         // console.log(res);
         // console.log(res.body);
         // console.log(res.data);
@@ -227,7 +227,7 @@ export default {
     },
     tijiaoForm(value) {
       this.$http
-        .post("/api/srccolumn/updatesrccolumn", value)
+        .post(process.env.API_HOST + "/srccolumn/updatesrccolumn", value)
         .then(res => {
           // 改动之后重新查询
           this.qrysrcsys();
@@ -240,7 +240,7 @@ export default {
     },
     tijiaoformAdd(value) {
       this.$http
-        .post("/api/srccolumn/addsrccolumn", value)
+        .post(process.env.API_HOST + "/srccolumn/addsrccolumn", value)
         .then(res => {
           // 改动之后重新查询
           this.qrysrcsys();
@@ -258,7 +258,7 @@ export default {
       console.log(index);
       // this.$http.post('/api/srcsys/delsrcsys',JSON.stringify(row).then((res)=>{
       this.$http
-        .post("/api/srcsys/delsrcsys", row)
+        .post(process.env.API_HOST + "/srcsys/delsrcsys", row)
         .then(res => {
           this.qrysrcsys();
           this.opensuccess("删除成功");

@@ -15,7 +15,7 @@ module.exports = {
     proxyTable: {
       '/api':{
         // target:'http://jsonplaceholder.typicode.com',
-        target:'http://localhost:8080',
+        target:'http://localhost:8090',
         changeOrigin:true,//允许跨域
         pathRewrite:{
             '/api':''

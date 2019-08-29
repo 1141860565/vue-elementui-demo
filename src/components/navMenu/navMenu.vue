@@ -70,6 +70,6 @@ export default {
   overflow-x: hidden;
 }
 .el-submenu__title {
-  border-bottom: 1px solid #8d98a2;
+  /* border-bottom: 1px solid #8d98a2; */
 }
 </style>

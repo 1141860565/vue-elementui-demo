@@ -14,9 +14,9 @@
     </div>
     <div id="tablediv" style="width:100%;  ">
       <!-- 显示数据的列表 -->
-      <el-table :data="list" v-loading="tabledivloading" >
-        <el-table-column prop="sys" label="sys"></el-table-column>
-        <el-table-column prop="sysNum" label="sysNum"></el-table-column>
+      <el-table :data="list" stripe v-loading="tabledivloading">
+        <el-table-column prop="sys" label="sys" width="60"></el-table-column>
+        <el-table-column prop="sysNum" label="sysNum" width="80"></el-table-column>
         <el-table-column prop="dbType" label="dbType"></el-table-column>
         <el-table-column prop="dbVersion" label="dbVersion"></el-table-column>
         <el-table-column prop="dbSid" label="dbSid"></el-table-column>
@@ -25,15 +25,25 @@
         <el-table-column prop="dbIp" label="dbIp"></el-table-column>
         <el-table-column prop="dbPort" label="dbPort"></el-table-column>
         <el-table-column prop="username" label="username"></el-table-column>
-        <el-table-column prop="encrpassword" label="encrpassword"></el-table-column>
+        <!-- <el-table-column prop="encrpassword" label="encrpassword"></el-table-column> -->
         <el-table-column prop="remark" label="remark"></el-table-column>
-        <el-table-column label="操作" min-width="150px">
+        <el-table-column label="操作" fixed="right" min-width="150px">
           <template slot-scope="scope">
             <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
             <el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
+	  <!-- 分页-页码 -->
+	  <el-pagination style="float:right;" 
+	        @size-change="handleSizeChange"
+	        @current-change="handleCurrentChange"
+	        :current-page="currentPage"
+	        :page-sizes="[5, 10, 25, 50, 100]"
+	        :page-size="10"
+	        layout="total, prev, pager, next, jumper"
+	        :total="total">
+	      </el-pagination>
     </div>
     <!-- <el-button type="text" @click="">打开嵌套表单的 Dialog</el-button> -->
     <!-- 编辑按钮打开的form -->
@@ -151,6 +161,8 @@ export default {
       dialogFormVisibleUpdate: false,
       dialogFormVisibleAdd: false,
       list: [],
+	  total:0,
+	  currentPage:1,
       form: {
         sys: "",
         sysNum: "",
@@ -189,12 +201,13 @@ export default {
       // this.$http.post('/api/srcsys/querysrcsys',data).then((res)=>{
       // 不带参的请求
       this.tabledivloading = true;
-      this.$http.get("/api/srcsys/querysrcsys").then(res => {
+      this.$http.get("/api/srcsys/querysrcsys?pageNum="+this.currentPage).then(res => {
         // console.log(res);
         // console.log(res.body);
         // console.log(res.data);
 
-        this.list = res.data;
+        this.list = res.data.list;
+        this.total = res.data.total;
         console.log(this.list);
         this.tabledivloading = false;
       });
@@ -310,7 +323,15 @@ export default {
     },
     openerror(openmsg) {
       this.$message.error(openmsg);
-    }
+    },
+	handleSizeChange(val) {
+		console.log(`每页 ${val} 条`);
+	},
+	handleCurrentChange(val) {
+		console.log(`当前页: ${val}`);
+		this.currentPage=val;
+		this.qrysrcsys();
+	}
   }
 };
 </script>

@@ -5,7 +5,7 @@
         <navHeader></navHeader>
       </el-header>
       <el-container>
-        <el-aside width="200px">
+        <el-aside class="leftMenu" width="200px">
           <navMenu></navMenu>
         </el-aside>
         <el-main class="main">
@@ -44,5 +44,8 @@ export default {
   }
   .main{
     height: 860px;
+  }
+  .leftMenu{
+	  background:#545c64
   }
 </style>

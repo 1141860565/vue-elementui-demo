@@ -10,7 +10,18 @@ module.exports = {
     // Paths
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
-    proxyTable: {},
+
+    //添加跨域相关
+    proxyTable: {
+      '/api':{
+        // target:'http://jsonplaceholder.typicode.com',
+        target:'http://localhost:8080',
+        changeOrigin:true,//允许跨域
+        pathRewrite:{
+            '/api':''
+        }
+      }
+    },
 
     // Various Dev Server settings
     host: 'localhost', // can be overwritten by process.env.HOST

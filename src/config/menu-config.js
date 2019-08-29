@@ -1,21 +1,14 @@
 module.exports = [{
-  name: '基础',
+  name: '数据调整',
   id: 'basic',
   sub: [{
-    name: 'BasicLayout',
-    componentName: 'BasicLayout'
+    name: 'SrcSystem',
+    componentName: 'SrcSystem'
   }, {
-    name: 'BasicContainer',
-    componentName: 'BasicContainer'
-  }]
-}, {
-  name: 'Form',
-  id: 'form',
-  sub: [{
-    name: 'BasicRadio',
-    componentName: 'BasicRadio'
+    name: 'SrcColumn',
+    componentName: 'SrcColumn'
   }, {
-    name: 'BasicCheckbox',
-    componentName: 'BasicCheckbox'
+    name: 'SrcTable',
+    componentName: 'SrcTable'
   }]
 }]

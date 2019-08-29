@@ -34,10 +34,12 @@ export default {
   },
   methods: {
     handleClickTab (route) {
+      console.log('handleClickTab +++ 点击tab时被调用')
       this.$store.commit('changeTab', route)
       this.$router.push(route)
     },
     removeTab (targetName) {
+      console.log('removeTab +++ 关闭tab')
       // 首页不允许被关闭（为了防止el-tabs栏中一个tab都没有）
       // if (targetName === 'index') {
       //   return false
@@ -55,6 +57,9 @@ export default {
         })
       }
       this.$store.commit('deductTab', targetName)
+      if(this.$route.meta.keepAlive){
+        this.$route.meta.keepAlive = false
+      }
       let deductIndex = this.openedTab.indexOf(targetName)
       this.openedTab.splice(deductIndex, 1)
       this.$router.push(activeName)
@@ -75,7 +80,9 @@ export default {
     }
   },
   watch: {
+
     getOpenedTab (val) {
+      console.log('getOpenedTab +++ 打开tab页')
       if (val.length > this.openedTab.length) {
         // 添加了新的tab页
         // 导致$store.state中的openedTab长度
@@ -83,7 +90,7 @@ export default {
         // 标签页中的openedTab长度
         // 因此需要新增标签页
         let newTab = val[val.length - 1] // 新增的肯定在数组最后一个
-        console.log(newTab)
+        console.log('getOpenedTab +++ newTab:'+newTab)
         ++this.tabIndex
         this.editableTabs.push({
           title: newTab,
@@ -95,6 +102,7 @@ export default {
       }
     },
     changeTab (val) {
+        console.log('changeTab +++ 监听activetab以实现点击左侧栏时激活已存在的标签')
       // 监听activetab以实现点击左侧栏时激活已存在的标签
       if (val !== this.editableTabsValue) {
         this.editableTabsValue = val

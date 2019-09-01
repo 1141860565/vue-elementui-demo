@@ -69,7 +69,7 @@ export default {
 .over-hide {
   overflow-x: hidden;
 }
-.el-submenu__title {
+/* .el-submenu__title { */
   /* border-bottom: 1px solid #8d98a2; */
-}
+/* } */
 </style>

@@ -54,6 +54,6 @@ export default {
   }
   .el-menu{
 	  /* background:#545c64; */
-    border-right: solid 1px #545c64;
+    border-right: solid 1px #545c64 !important;
   }
 </style>

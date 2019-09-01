@@ -206,7 +206,7 @@ export default {
     },
     tijiaoForm(value) {
       this.$http
-        .post(process.env.API_HOST + "/api/srctable/updatesrcTable", value)
+        .post(process.env.API_HOST + "/srctable/updatesrcTable", value)
         .then(res => {
           // 改动之后重新查询
           this.qrysrcsys();
@@ -219,7 +219,7 @@ export default {
     },
     tijiaoformAdd(value) {
       this.$http
-        .post(process.env.API_HOST + "/api/srctable/addsrcTable", value)
+        .post(process.env.API_HOST + "/srctable/addsrcTable", value)
         .then(res => {
           // 改动之后重新查询
           this.qrysrcsys();
@@ -235,16 +235,17 @@ export default {
       console.log(row);
       console.log("++++++++");
       console.log(index);
+      this.openerror("暂不提供删除");
       // this.$http.post('/api/srcsys/delsrcsys',JSON.stringify(row).then((res)=>{
-      this.$http
-        .post(process.env.API_HOST + "/api/srcsys/delsrcsys", row)
-        .then(res => {
-          this.qrysrcsys();
-          this.opensuccess("删除成功");
-        })
-        .catch(res => {
-          this.openerror("删除失败");
-        });
+      // this.$http
+      //   .post(process.env.API_HOST + "/api/srcsys/delsrcsys", row)
+      //   .then(res => {
+      //     this.qrysrcsys();
+      //     this.opensuccess("删除成功");
+      //   })
+      //   .catch(res => {
+      //     this.openerror("删除失败");
+      //   });
     },
     // 打开新增框
     handleAdd() {

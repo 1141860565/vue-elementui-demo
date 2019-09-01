@@ -25,6 +25,7 @@
         <el-table-column prop="columnCnName" label="columnCnName"></el-table-column>
         <el-table-column prop="isPk" label="isPk"></el-table-column>
         <el-table-column prop="notNull" label="notNull"></el-table-column>
+        <el-table-column prop="defaultValue" label="defaultValue"></el-table-column>
         <el-table-column prop="isDk" label="isDk"></el-table-column>
         <el-table-column prop="breakFlag" label="breakFlag"></el-table-column>
         <el-table-column label="操作" fixed="right" min-width="150px">
@@ -79,6 +80,9 @@
         <el-form-item label="notNull" :label-width="formLabelWidth">
           <el-input v-model="form.notNull" autocomplete="off"></el-input>
         </el-form-item>
+        <el-form-item label="defaultValue" :label-width="formLabelWidth">
+          <el-input v-model="form.defaultValue" autocomplete="off"></el-input>
+        </el-form-item>
         <el-form-item label="isDk" :label-width="formLabelWidth">
           <el-input v-model="form.isDk" autocomplete="off"></el-input>
         </el-form-item>
@@ -129,6 +133,9 @@
         <el-form-item label="notNull" :label-width="formLabelWidth">
           <el-input v-model="formAdd.notNull" autocomplete="off"></el-input>
         </el-form-item>
+        <el-form-item label="defaultValue" :label-width="formLabelWidth">
+          <el-input v-model="formAdd.defaultValue" autocomplete="off"></el-input>
+        </el-form-item>
         <el-form-item label="isDk" :label-width="formLabelWidth">
           <el-input v-model="formAdd.isDk" autocomplete="off"></el-input>
         </el-form-item>
@@ -174,6 +181,7 @@ export default {
         columnCnName: "",
         isPk: "",
         notNull: "",
+        defaultValue: "",
         isDk: "",
         breakFlag: ""
       },
@@ -188,6 +196,7 @@ export default {
         columnCnName: "",
         isPk: "",
         notNull: "",
+        defaultValue: "",
         isDk: "",
         breakFlag: ""
       },
@@ -256,16 +265,16 @@ export default {
       console.log(row);
       console.log("++++++++");
       console.log(index);
-      // this.$http.post('/api/srcsys/delsrcsys',JSON.stringify(row).then((res)=>{
-      this.$http
-        .post(process.env.API_HOST + "/srcsys/delsrcsys", row)
-        .then(res => {
-          this.qrysrcsys();
-          this.opensuccess("删除成功");
-        })
-        .catch(res => {
-          this.openerror("删除失败");
-        });
+      this.openerror("暂不提供删除");
+      // this.$http
+      //   .post(process.env.API_HOST + "/srcsys/delsrcsys", row)
+      //   .then(res => {
+      //     this.qrysrcsys();
+      //     this.opensuccess("删除成功");
+      //   })
+      //   .catch(res => {
+      //     this.openerror("删除失败");
+      //   });
     },
     // 打开新增框
     handleAdd() {

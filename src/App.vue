@@ -43,7 +43,7 @@ export default {
   }
   .header{
     background: #1bbc9b;
-    /* background:linear-gradient(to right,#1bbc9b,#5cdac1b0,#e8fdf363 ); */
+    /* background: linear-gradient(to right,#cb83ff ,#60a7ff ); */
     line-height: 40px;
   }
   /* .main{

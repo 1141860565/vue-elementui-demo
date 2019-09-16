@@ -2,7 +2,7 @@
   "name": "element",
   "version": "1.0.0",
   "description": "A Vue.js project",
-  "author": "wxf <1004510635@qq.com>",
+  "author": "",
   "private": true,
   "scripts": {
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",

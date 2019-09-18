@@ -47,7 +47,7 @@
         :total="total"
       ></el-pagination>
     </div>
-    <!-- <el-button type="text" @click="">打开嵌套表单的 Dialog</el-button> -->
+    <!-- 上传 -->
     <el-dialog title="上传" :visible.sync="dialogUpload">
       <div style="min-height:150px;">
         <el-upload
@@ -67,6 +67,7 @@
         </el-upload>
       </div>
     </el-dialog>
+    <!-- <el-button type="text" @click="">打开嵌套表单的 Dialog</el-button> -->
     <!-- 编辑按钮打开的form -->
     <el-dialog title="编辑" :visible.sync="dialogFormVisibleUpdate">
       <el-form :model="form">
@@ -165,8 +166,7 @@
     </el-dialog>
   </div>
 </template>
-<style >
-</style>
+
 <script>
 export default {
   name: "SrcSystem",
@@ -185,7 +185,7 @@ export default {
       list: [],
       total: 0,
       currentPage: 1,
-      uploadURL: process.env.API_HOST + "/fileUpload",
+      uploadURL: process.env.API_HOST + "/srcsystem/fileUpload",
       fileList: [],
       form: {
         sys: "",
@@ -241,11 +241,11 @@ export default {
           this.total = res.data.total;
           console.log(this.list);
           this.tabledivloading = false;
+        })
+        .catch(res => {
+          this.tabledivloading = false;
+          this.openerror('网络异常，请稍后再试，或联系管理员检查');
         });
-      //   .catch(res => {
-      //     // this.tabledivloading = flase
-      //     // this.openerror('网络异常，请稍后再试，或联系管理员检查')
-      //   });
     },
     handleEdit(index, row) {
       console.log(index, row);
@@ -371,6 +371,7 @@ export default {
       this.currentPage = val;
       this.qrysrcsys();
     },
+    // 上传相关方法
     clearFileList() {
       this.$refs.upload.clearFiles();//每次点击选择文件时，将已经上传的文件记录清掉
     },
@@ -392,3 +393,5 @@ export default {
   }
 };
 </script>
+<style >
+</style>

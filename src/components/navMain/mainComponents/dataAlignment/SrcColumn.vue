@@ -35,17 +35,43 @@
           </template>
         </el-table-column>
       </el-table>
-			<!-- 分页-页码 -->
-			<el-pagination style="float:right;" 
-			      @size-change="handleSizeChange"
-			      @current-change="handleCurrentChange"
-			      :current-page="currentPage"
-			      :page-sizes="[5, 10, 25, 50, 100]"
-			      :page-size="10"
-			      layout="total, prev, pager, next, jumper"
-			      :total="total">
-			    </el-pagination>
+      <!-- 分页-页码 -->
+      <el-pagination
+        style="float:right;"
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+        :current-page="currentPage"
+        :page-sizes="[5, 10, 25, 50, 100]"
+        :page-size="10"
+        layout="total, prev, pager, next, jumper"
+        :total="total"
+      ></el-pagination>
     </div>
+    <!-- 上传 -->
+    <el-dialog title="上传" :visible.sync="dialogUpload">
+      <div style="min-height:150px;">
+        <el-upload
+          class="upload-demo"
+          ref="upload"
+          :action="uploadURL"
+          :on-preview="handlePreview"
+          :on-remove="handleRemove"
+          :on-error="uploaderror"
+          :on-success="uploadsuccess"
+          :file-list="fileList"
+          :auto-upload="false"
+        >
+          <el-button slot="trigger" size="small" type="primary" @click="clearFileList">选取文件</el-button>
+          <el-button
+            style="margin-left: 10px;"
+            size="small"
+            type="success"
+            @click="submitUpload"
+          >上传到服务器</el-button>
+          <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
+        </el-upload>
+      </div>
+    </el-dialog>
     <!-- <el-button type="text" @click="">打开嵌套表单的 Dialog</el-button> -->
     <!-- 编辑按钮打开的form -->
     <el-dialog title="编辑" :visible.sync="dialogFormVisibleUpdate">
@@ -151,9 +177,7 @@
     </el-dialog>
   </div>
 </template>
-<style>
 
-</style>
 <script>
 export default {
   name: "SrcColumn",
@@ -164,12 +188,16 @@ export default {
       butttonUpdate: "修改",
       butttonDel: "删除",
       butttonAdd: "增加",
+      butttonUpload: "上传",
+      uploadURL: process.env.API_HOST + "/srcsystem/fileUpload",
       tabledivloading: false,
       dialogFormVisibleUpdate: false,
       dialogFormVisibleAdd: false,
+      dialogUpload: false,
       list: [],
-	  total:0,
-	  currentPage:1,
+      fileList: [],
+      total: 0,
+      currentPage: 1,
       form: {
         sys: "",
         dbSid: "",
@@ -210,15 +238,21 @@ export default {
       // this.$http.post('/api/srcsys/querysrcsys',data).then((res)=>{
       // 不带参的请求
       this.tabledivloading = true;
-      this.$http.get(process.env.API_HOST + "/srccolumn/querysrccolumn?pageNum=" + this.currentPage).then(res => {
-        // console.log(res);
-        // console.log(res.body);
-        // console.log(res.data);
-        this.list = res.data.list;
-        this.total = res.data.total;
-        console.log(this.list);
-        this.tabledivloading = false;
-      });
+      this.$http
+        .get(
+          process.env.API_HOST +
+            "/srccolumn/querysrccolumn?pageNum=" +
+            this.currentPage
+        )
+        .then(res => {
+          // console.log(res);
+          // console.log(res.body);
+          // console.log(res.data);
+          this.list = res.data.list;
+          this.total = res.data.total;
+          console.log(this.list);
+          this.tabledivloading = false;
+        });
       //   .catch(res => {
       //     // this.tabledivloading = flase
       //     // this.openerror('网络异常，请稍后再试，或联系管理员检查')
@@ -283,14 +317,10 @@ export default {
     // 关闭新增框 清除已填内容
     dialogFormVisibleAddBeforeClose() {
       this.dialogFormVisibleAdd = false;
-      this.formAdd = {
-        
-      };
+      this.formAdd = {};
     },
     dialogFormVisibleBeforeClose() {
-      this.form = {
-        
-      };
+      this.form = {};
     },
     openmsg(openmsg) {
       this.$message(openmsg);
@@ -310,14 +340,35 @@ export default {
     openerror(openmsg) {
       this.$message.error(openmsg);
     },
-	handleSizeChange(val) {
-		console.log(`每页 ${val} 条`);
-	},
-	handleCurrentChange(val) {
-		console.log(`当前页: ${val}`);
-		this.currentPage=val;
-		this.qrysrcsys();
-	}
+    handleSizeChange(val) {
+      console.log(`每页 ${val} 条`);
+    },
+    handleCurrentChange(val) {
+      console.log(`当前页: ${val}`);
+      this.currentPage = val;
+      this.qrysrcsys();
+    },
+    // 上传相关方法
+    clearFileList() {
+      this.$refs.upload.clearFiles(); //每次点击选择文件时，将已经上传的文件记录清掉
+    },
+    submitUpload() {
+      this.$refs.upload.submit(); //手动上传文件（用于非自动上传）
+    },
+    handleRemove(file, fileList) {
+      console.log(file, fileList);
+    },
+    handlePreview(file) {
+      console.log(file);
+    },
+    uploaderror() {
+      this.openerror("上传失败");
+    },
+    uploadsuccess() {
+      this.opensuccess("上传成功");
+    }
   }
 };
 </script>
+<style>
+</style>
